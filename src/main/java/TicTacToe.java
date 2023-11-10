@@ -36,7 +36,7 @@ public class TicTacToe {
 
             //check wins
             if (checkWin(currentPlayer)) {
-                if (currentPlayer == 'X') {
+                if (currentPlayer == PLAYER_HUMAN) {
                     System.out.println("You won! Congrats!");
                 } else {
                     System.out.println("Computer wins!");
@@ -66,6 +66,8 @@ public class TicTacToe {
     }
 
     public static int checkAvailableCell() {
+        // --
+        //do not check everytime use --
         int availableCell = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -78,7 +80,6 @@ public class TicTacToe {
     }
 
     static boolean isBoardFull() {
-        if (checkAvailableCell() > 0) {
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[i].length; j++) {
                     if (board[i][j] == ' ') {
@@ -86,7 +87,6 @@ public class TicTacToe {
                     }
                 }
             }
-        }
         return true;
     }
 
@@ -96,14 +96,12 @@ public class TicTacToe {
         int row = scanner.nextInt();
         int col = scanner.nextInt();
 
-        if (checkAvailableCell() > 0) {
             if (row >= 0 && row <= 2 && col >= 0 && col <= 2) {
                 if (board[row][col] == ' ') {
                     board[row][col] = PLAYER_HUMAN;
                 } else {
                     System.out.println(" The cell is not empty!");
                 }
-            }
         } else {
             System.out.println("Invalid Indexes Entered!!!");
         }
@@ -119,22 +117,6 @@ public class TicTacToe {
                 break;
             }
         }
-        //   if (checkAvailableCell() > 0) {
-//            int randomX = random.nextInt(checkAvailableCell());
-//            int index = 0;
-//
-//            for (int i = 0; i < board.length; i++) {
-//                for (int j = 0; j < board[i].length; j++) {
-//                    if (board[i][j] == ' ') {
-//                        if (index == randomX) {
-//                            board[i][j] = PLAYER_COMPUTER;
-//                            System.out.println("Computer placed the move '0' to indexes: " + i + " and " + j);
-//                        }
-//                    }
-//                    index++;
-//                }
-//            }
-        // }
     }
 
 
