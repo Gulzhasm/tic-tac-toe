@@ -5,35 +5,29 @@ import java.util.Scanner;
 
 public class TicTacToe {
 
-    private static final char PLAYER_HUMAN = 'X';
-    private static final char PLAYER_COMPUTER = 'O';
-    private static boolean gameOver;
-
-    static char[][] board;
-
-    static {
-        board = new char[][]{
-                {' ', ' ', ' '},
-                {' ', ' ', ' '},
-                {' ', ' ', ' '}
-        };
-    }
+    private final char PLAYER_HUMAN = 'X';
+    private final char PLAYER_COMPUTER = 'O';
+    private boolean gameOver = false;
+    char[][] board = new char[][]{
+            {' ', ' ', ' '},
+            {' ', ' ', ' '},
+            {' ', ' ', ' '}
+    };
 
 
-    public static void main(String[] args) {
+    public void play() {
         char currentPlayer = PLAYER_HUMAN;
-        gameOver = false;
 
         while (!gameOver) {
-            displayBoard(board);
-            if(currentPlayer == PLAYER_HUMAN) {
+            displayBoard();
+            if (currentPlayer == PLAYER_HUMAN) {
                 humanMove();
             } else {
                 computerMove();
             }
 
-            if(gameOver){
-                displayBoard(board);
+            if (gameOver) {
+                displayBoard();
                 System.out.println("Player " + currentPlayer + " has won! ");
             } else {
                 currentPlayer = (currentPlayer == PLAYER_HUMAN) ? PLAYER_COMPUTER : PLAYER_HUMAN;
@@ -41,7 +35,7 @@ public class TicTacToe {
         }
     }
 
-    public static void displayBoard(char[][] board) {
+    public void displayBoard() {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 System.out.print(board[row][col]);
@@ -54,7 +48,7 @@ public class TicTacToe {
     }
 
 
-    public static void humanMove() {
+    public void humanMove() {
         System.out.println("Please enter row and colum: ");
         Scanner scanner = new Scanner(System.in);
         int row = scanner.nextInt();
@@ -68,7 +62,7 @@ public class TicTacToe {
         }
     }
 
-    public static void computerMove() {
+    public void computerMove() {
         Random random = new Random();
         while (true) {
             int row = random.nextInt(3);
@@ -83,7 +77,7 @@ public class TicTacToe {
 
 
     // Function to check if the current player has won
-    static boolean hasWon(char player) {
+    boolean hasWon(char player) {
         // Check rows
         for (int i = 0; i < board.length; i++) {
             if (board[i][0] == player && board[i][1] == player && board[i][2] == player) {
@@ -110,5 +104,4 @@ public class TicTacToe {
         //no winners
         return false;
     }
-
 }
