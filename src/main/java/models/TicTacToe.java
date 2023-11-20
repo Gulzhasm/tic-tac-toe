@@ -62,22 +62,52 @@ public class TicTacToe {
         }
     }
 
-    public void computerMove() {
-        Random random = new Random();
-        while (true) {
-            int row = random.nextInt(3);
-            int col = random.nextInt(3);
-            if (board[row][col] == ' ') {
-                board[row][col] = PLAYER_COMPUTER;
-                gameOver = hasWon(PLAYER_COMPUTER);
-                break;
+    public int[] prioritizedMove() {
+        int[][] corners = {
+                {0, 0}, // 0
+                {0, 2}, // 1
+                {2, 0}, // 2
+                {2, 2}   //3
+        };
+
+        int[][] edges = {
+                {0, 1}, // 0
+                {1, 0}, // 1
+                {1, 2}, // 2
+                {2, 1}   //3
+        };
+
+        if (board[1][1] == ' ') {
+            return new int[]{1, 1};
+        }
+
+        for (int[] corner : corners) {
+            if (board[corner[0]][corner[1]] == ' ') {
+                return corner;
             }
+        }
+
+        for (int[] edge : edges) {
+            if (board[edge[0]][edge[1]] == ' ') {
+                return edge;
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
+    public void computerMove() {
+        int[] move = prioritizedMove();
+        if (move[0] != -1) {
+            board[move[0]][move[1]] = PLAYER_COMPUTER;
+            gameOver = hasWon(PLAYER_COMPUTER);
+        } else {
+            System.out.println("it is a draw");
         }
     }
 
 
     // Function to check if the current player has won
-    boolean hasWon(char player) {
+    public boolean hasWon(char player) {
         // Check rows
         for (int i = 0; i < board.length; i++) {
             if (board[i][0] == player && board[i][1] == player && board[i][2] == player) {
