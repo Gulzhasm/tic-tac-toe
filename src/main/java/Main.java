@@ -1,8 +1,8 @@
-import models.TicTacToe;
+import models.Game;
 
 public class Main {
     public static void main(String[] args) {
-        TicTacToe game = new TicTacToe();
+        Game game = new Game();
         game.play();
     }
 }
