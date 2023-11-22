@@ -7,6 +7,7 @@ public class Game {
     private final char HUMAN = 'X';
     private final char COMPUTER = 'O';
     private boolean isGameOver = false;
+    private int humanMoveCount = 0;
     private char[][] board = {
             {' ', ' ', ' '},
             {' ', ' ', ' '},
@@ -17,21 +18,22 @@ public class Game {
         char currentPlayer = HUMAN;
 
         while (!isGameOver) {
-            printBoard();
             if (currentPlayer == HUMAN) {
                 humanMove();
             } else {
                 computerMove();
             }
             if (isGameOver) {
-                printBoard();
                 System.out.println("The player " + currentPlayer + " has won!");
-            } else if (isBoardFull()) {
-                System.out.println("It is a draw! No one wins!");
-                break;
+            } else if (humanMoveCount >= 4) {
+                if (isBoardFull()) {
+                    System.out.println("It is a draw! No one wins!");
+                    break;
+                }
             } else {
                 currentPlayer = (currentPlayer == HUMAN) ? COMPUTER : HUMAN;
             }
+            printBoard();
         }
     }
 
@@ -42,9 +44,12 @@ public class Game {
         int col = scanner.nextInt();
         if (board[row][col] == ' ') {
             board[row][col] = HUMAN;
-            isGameOver = hasWon(HUMAN);
+            humanMoveCount++;
         } else {
             System.out.println("Please enter valid and empty cell position from [3][3]");
+        }
+        if(humanMoveCount >= 3){
+            isGameOver = hasWon(HUMAN);
         }
     }
 
@@ -143,5 +148,4 @@ public class Game {
         }
         return new int[]{-1, -1};
     }
-
 }
